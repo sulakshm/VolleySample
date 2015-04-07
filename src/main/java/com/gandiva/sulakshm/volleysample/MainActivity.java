@@ -24,8 +24,19 @@ import com.android.volley.toolbox.JsonObjectRequest;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.IOException;
+import java.io.InputStream;
+import java.security.KeyManagementException;
+import java.security.KeyStore;
+import java.security.KeyStoreException;
+import java.security.NoSuchAlgorithmException;
+import java.security.UnrecoverableKeyException;
+import java.security.cert.CertificateException;
 import java.util.HashMap;
 import java.util.Map;
+
+import javax.net.ssl.SSLSocket;
+import javax.net.ssl.SSLSocketFactory;
 
 
 public class MainActivity extends ActionBarActivity implements Response.Listener,
@@ -54,10 +65,46 @@ public class MainActivity extends ActionBarActivity implements Response.Listener
         return basic_params + secret_key;
     }
 
+    private SSLSocketFactory getSSLSocketFactory () {
+
+        KeyStore trustStore = null;
+        try {
+            trustStore = KeyStore.getInstance("BKS");
+        } catch (KeyStoreException e) {
+            e.printStackTrace();
+        }
+        InputStream in = getResources().openRawResource(R.raw.openssl_certificate);
+        try {
+            trustStore.load(in, "test123".toCharArray());
+            in.close();
+        } catch (CertificateException e) {
+            e.printStackTrace();
+        } catch (NoSuchAlgorithmException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        SSLSocketFactory sf = null;
+        try {
+            sf = (SSLSocketFactory) new MySSLSocketFactory(trustStore);
+        } catch (NoSuchAlgorithmException e) {
+            e.printStackTrace();
+        } catch (KeyManagementException e) {
+            e.printStackTrace();
+        } catch (KeyStoreException e) {
+            e.printStackTrace();
+        } catch (UnrecoverableKeyException e) {
+            e.printStackTrace();
+        }
+
+        return sf;
+    }
+
     private synchronized RequestQueue getRequestQueue() {
         if (mQueue == null) {
             Cache cache = new DiskBasedCache(this.getCacheDir(), 10 * 1024 * 1024);
-            Network network = new BasicNetwork(new HurlStack());
+            Network network = new BasicNetwork(new HurlStack(null, getSSLSocketFactory()));
             mQueue = new RequestQueue(cache, network);
             // Don't forget to start the volley request queue
             mQueue.start();

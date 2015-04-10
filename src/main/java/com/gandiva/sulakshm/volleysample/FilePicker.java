@@ -73,14 +73,14 @@ public class FilePicker {
             String[] fList = path.list(filter);
             fileList = new Item[fList.length];
             for (int i = 0; i < fList.length; i++) {
-                fileList[i] = new Item(fList[i], R.drawable.abc_switch_thumb_material);
+                fileList[i] = new Item(fList[i], R.mipmap.file_icon);
 
                 // Convert into file path
                 File sel = new File(path, fList[i]);
 
                 // Set drawables
                 if (sel.isDirectory()) {
-                    fileList[i].icon = R.drawable.abc_ic_menu_copy_mtrl_am_alpha;
+                    fileList[i].icon = R.mipmap.directory_icon;
                     Log.d("DIRECTORY", fileList[i].file);
                 } else {
                     Log.d("FILE", fileList[i].file);
@@ -92,7 +92,7 @@ public class FilePicker {
                 for (int i = 0; i < fileList.length; i++) {
                     temp[i + 1] = fileList[i];
                 }
-                temp[0] = new Item("Up", R.drawable.abc_ic_menu_cut_mtrl_alpha);
+                temp[0] = new Item("Up", R.mipmap.directory_up);
                 fileList = temp;
             }
         } else {

@@ -17,38 +17,85 @@
         android:layout_centerHorizontal="true"
         android:src="@mipmap/ic_launcher" />
 
-    <Button
-        android:id="@+id/login_button"
-        android:layout_width="match_parent"
+    <TableLayout
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@+id/imageView"
-        android:text="Send Login Request" />
+        android:layout_centerHorizontal="true"
+        android:id="@+id/tableLayout">
 
-    <Button
-        android:id="@+id/logout_button"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/login_button"
-        android:text="Send Logout Request"
-        android:visibility="invisible"/>
+        <TableRow
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent">
 
-    <Button
-        android:id="@+id/getitems_button"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/logout_button"
-        android:text="Send get items Request"
-        android:visibility="invisible"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="Host Addr"
+                android:id="@+id/tvHostAddr" />
+
+            <EditText
+                android:layout_weight="1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/HostAddrVal"
+                android:hint="172.30.40.212"/>
+        </TableRow>
+
+        <TableRow
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="File/Dir arg"
+                android:id="@+id/tvRequestArg" />
+
+            <EditText
+                android:layout_weight="1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/RequestArg"
+                android:hint="testing"/>
+        </TableRow>
+
+
+    </TableLayout>
+
 
     <TextView
-        android:id="@+id/textView"
+        android:id="@+id/request_view"
+        android:hint="Choose request to send."
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentEnd="true"
         android:layout_alignParentLeft="true"
         android:layout_alignParentRight="true"
         android:layout_alignParentStart="true"
-        android:layout_below="@+id/getitems_button"
+        android:layout_below="@+id/tableLayout"
+ />
+
+
+    <Button
+        android:id="@+id/request_button"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/request_view"
+        android:text="Send Request" />
+
+
+    <TextView
+        android:id="@+id/responseView"
+        android:layout_width="wrap_content"
+        android:layout_height="fill_parent"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentStart="true"
+        android:layout_below="@+id/request_button"
         android:layout_marginTop="26dp" />
 
 </RelativeLayout>
